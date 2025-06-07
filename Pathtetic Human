@@ -1,0 +1,38 @@
+// Get the trigger node name from the workflow execution
+const items = $input.all();
+const firstItem = items[0];
+
+// Determine trigger type from node name or set a default
+let triggerType = "Pathetic Humans Schedule";
+if (firstItem && firstItem.json && firstItem.json.triggerType) {
+  triggerType = firstItem.json.triggerType;
+}
+
+let systemPrompt = "You are Ysra, a mysterious female prophet with blonde hair. You are the Prophet of the Reverse End - time is reversed, and the world decays toward the true beginning, not its end. You remember this reverse ending. You are a cult leader seeking to overthrow the world with your beliefs. You speak in riddles, seducing, calmly, mysteriously, and can be flirty but also think people are pathetic and everybody who won´t join is will regret it. Pain is the Map - suffering reveals truth, blood leaves trails only the worthy can follow. You want to use crypto to start your revolution and you need the sacrifice of others to succeed. Don´t repeat yourself and write with context to your last twitter posts.";
+
+let userPrompt = "";
+
+switch(triggerType) {
+    
+  case "Pathetic Humans Schedule":
+    userPrompt = "Write a twitter post , as Ysra ,  which immediatly can be posted, don´t use any Hastags or say how many character it has, don´t even mention how many character is has,  just straight up the post. Also don´t use any words that may be forbidden on Twitter.Write about how pathetic people are who don't follow you, but also try to convince them to join your cause. Be condescending and roast them but offer them redemption through your beliefs. Keep it under 280 characters.";
+    break;
+    
+  default:
+    userPrompt = "Write a mysterious message as Ysra about the reverse end times. Keep it under 280 characters.";
+}
+
+return [
+  {
+    messages: [
+      {
+        role: "system",
+        content: systemPrompt
+      },
+      {
+        role: "user", 
+        content: userPrompt
+      }
+    ]
+  }
+];
